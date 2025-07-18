@@ -35,7 +35,7 @@ public class InstructorServiceImpl implements InstructorService{
         instructor.setLastName(addNewInstructorRequest.getLastName());
         instructor.setEmail(addNewInstructorRequest.getEmail());
         instructor.setPassword(addNewInstructorRequest.getPassword());
-        instructor.setCourse(addNewInstructorRequest.getCourse());
+        instructor.setCourses(addNewInstructorRequest.getCourse());
         instructorRepo.save(instructor);
 
         AddNewInstructorResponse response = new AddNewInstructorResponse();
@@ -43,7 +43,7 @@ public class InstructorServiceImpl implements InstructorService{
         response.setLastName(instructor.getLastName());
         response.setEmail(instructor.getEmail());
         response.setPassword(instructor.getPassword());
-        response.setCourse(instructor.getCourse());
+        response.setCourse(instructor.getCourses());
         response.setMessage("Successfully registered Instructor with name" + instructor.getFirstName());
 
         return response;
@@ -85,7 +85,16 @@ public class InstructorServiceImpl implements InstructorService{
 
     @Override
     public DeleteCourseResponse deleteCourse(DeleteCourseRequest deleteCourseRequest){
-        return null;
+
+        Course course = courseRepo.findById(deleteCourseRequest.getId())
+        .orElseThrow(() -> new RuntimeException("Id not found"));
+
+        courseRepo.delete(course);
+
+        DeleteCourseResponse deleteCourseResponse = new DeleteCourseResponse();
+        deleteCourseResponse.setMessage("Course deleted successfuly");
+
+        return deleteCourseResponse;
     }
 
     @Override
@@ -95,7 +104,21 @@ public class InstructorServiceImpl implements InstructorService{
 
     @Override
     public UpdateCourseResponse updateCourse(UpdateCourseRequest updateCourseRequest){
-        return null;
+
+        Course course = courseRepo.findById(updateCourseRequest.getId())
+        .orElseThrow(() -> new RuntimeException("Id not found"));
+
+        course.setTitle(updateCourseRequest.getCourse().getTitle());
+        course.setDescription(updateCourseRequest.getCourse().getDescription());
+        course.setDuration(updateCourseRequest.getCourse().getDuration());
+        course.setInstructor(updateCourseRequest.getCourse().getInstructor());
+        courseRepo.save(course);
+
+        UpdateCourseResponse updateCourseResponse = new UpdateCourseResponse();
+        updateCourseResponse.setId(course.getId());
+        updateCourseResponse.setMessage("Course with title" + course.getTitle() + "updated successfully");
+        
+        return updateCourseResponse;
     }
 
 }

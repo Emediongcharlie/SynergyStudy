@@ -12,5 +12,6 @@ public class AddNewStudentResponse {
     private String phoneNumber;
     private String course;
     private String password;
+    private String message;
 
 }

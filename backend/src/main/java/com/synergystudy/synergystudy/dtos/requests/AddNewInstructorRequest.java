@@ -1,5 +1,7 @@
 package com.synergystudy.synergystudy.dtos.requests;
 
+import java.util.List;
+
 import com.synergystudy.synergystudy.data.models.Course;
 
 import jakarta.persistence.ManyToMany;
@@ -12,7 +14,7 @@ public class AddNewInstructorRequest{
     private String firstName;
     private String lastName;
     private String email;
-    @ManyToMany
-    private Course course;
+  
+    private List<Course> course;
     private String password;
 }

@@ -9,4 +9,6 @@ import com.synergystudy.synergystudy.data.models.Instructor;
 public interface InstructorRepo extends JpaRepository<Instructor, Long> {
 
     Optional<Instructor> findByEmail(String email);
+    Optional<Instructor> findById(Long id);
+    
 }

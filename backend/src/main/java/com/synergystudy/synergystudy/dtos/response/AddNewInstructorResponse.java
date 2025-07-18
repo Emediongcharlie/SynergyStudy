@@ -1,8 +1,9 @@
 package com.synergystudy.synergystudy.dtos.response;
 
+import java.util.List;
+
 import com.synergystudy.synergystudy.data.models.Course;
 
-import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 @Data
@@ -12,8 +13,7 @@ public class AddNewInstructorResponse {
     private String firstName;
     private String lastName;
     private String email;
-    @ManyToMany
-    private Course course;
+    private List<Course> course;
     private String password;
     private String message;
 }

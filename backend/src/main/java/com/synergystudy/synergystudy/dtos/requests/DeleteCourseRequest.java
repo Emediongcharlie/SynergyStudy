@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class DeleteCourseRequest {
 
+    private Long id;
     private Course course;
 
 }

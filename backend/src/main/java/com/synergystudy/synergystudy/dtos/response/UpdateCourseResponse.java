@@ -9,5 +9,6 @@ public class UpdateCourseResponse {
 
     private String message;
     private Course course;
+    private Long id;
 
 }

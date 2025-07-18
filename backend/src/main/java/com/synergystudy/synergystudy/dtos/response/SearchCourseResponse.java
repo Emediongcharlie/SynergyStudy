@@ -3,9 +3,10 @@ package com.synergystudy.synergystudy.dtos.response;
 import lombok.Data;
 
 @Data
-public class LoginStudentResponse {
+public class SearchCourseResponse {
 
-    private String firstName;
-    private String password;
+    private Long id;
+    private String title;
     private String message;
+
 }
