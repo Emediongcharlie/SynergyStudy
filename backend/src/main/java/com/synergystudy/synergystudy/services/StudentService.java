@@ -17,7 +17,7 @@ import com.synergystudy.synergystudy.dtos.response.SearchCourseResponse;
 public interface StudentService {
 
     AddNewStudentResponse registerStudent(AddNewStudentRequest addNewStudentRequest);
-    LoginStudentResponse loginInstructor(LoginStudentRequest loginStudentRequest);
+    LoginStudentResponse loginStudent(LoginStudentRequest loginStudentRequest);
     RegisterCourseResponse registerCourse(RegisterCourseRequest registerCourseRequest);
     CancelCourseResponse cancelCourse(CancelCourseRequest cancelCourseRequest);
     GetNotificationResponse getNotification(GetNotifictaionRequest getNotificationRequest);

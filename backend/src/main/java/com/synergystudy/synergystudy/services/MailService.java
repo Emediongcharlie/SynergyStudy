@@ -11,11 +11,20 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendRegistrationEmail(String toEmail, String courseTitle) {
+    public void sendCourseRegistrationEmail(String toEmail, String courseTitle) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Course Registration Confirmation");
         message.setText("You have successfully registered for the course: " + courseTitle);
+        message.setFrom("your_email@gmail.com");
+        mailSender.send(message);
+    }
+
+    public void sendRegistrationEmail(String toEmail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Registration Confirmation");
+        message.setText("You have been successfully registered");
         message.setFrom("your_email@gmail.com");
         mailSender.send(message);
     }

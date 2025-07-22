@@ -1,6 +1,8 @@
 package com.synergystudy.synergystudy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.synergystudy.synergystudy.data.models.Course;
 import com.synergystudy.synergystudy.data.models.Instructor;
@@ -19,12 +21,18 @@ import com.synergystudy.synergystudy.dtos.response.DiscontinueAStudentResponse;
 import com.synergystudy.synergystudy.dtos.response.LoginInstructorResponse;
 import com.synergystudy.synergystudy.dtos.response.UpdateCourseResponse;
 
+
+@Service
 public class InstructorServiceImpl implements InstructorService{
 
     @Autowired
     InstructorRepo instructorRepo;
     @Autowired
     CourseRepo courseRepo;
+    @Autowired
+    MailService mailService;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     Instructor instructor = new Instructor();
     Course course = new Course();
@@ -34,9 +42,11 @@ public class InstructorServiceImpl implements InstructorService{
         instructor.setFirstName(addNewInstructorRequest.getFirstName());
         instructor.setLastName(addNewInstructorRequest.getLastName());
         instructor.setEmail(addNewInstructorRequest.getEmail());
-        instructor.setPassword(addNewInstructorRequest.getPassword());
+        instructor.setPassword(passwordEncoder.encode(addNewInstructorRequest.getPassword()));
         instructor.setCourses(addNewInstructorRequest.getCourse());
         instructorRepo.save(instructor);
+
+        mailService.sendRegistrationEmail(addNewInstructorRequest.getEmail());
 
         AddNewInstructorResponse response = new AddNewInstructorResponse();
         response.setFirstName(instructor.getFirstName());

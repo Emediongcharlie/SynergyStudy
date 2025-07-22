@@ -28,6 +28,7 @@ public class Course {
     private Instructor instructor;
     @ManyToMany(mappedBy = "courses")
     private List<Student> students;
+    private boolean isPromoted = false;
 }
 
 
