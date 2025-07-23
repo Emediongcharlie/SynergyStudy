@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/protected-route";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 import StudentViewLayout from "./components/student-view/CommonLayout";
+import NotFound from "./pages/not-found";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -19,6 +20,7 @@ function App() {
         <Route path="/student" element={<StudentHomepage />} />
         <Route path="/" element={<StudentViewLayout />} />
         <Route path="/home" element={<StudentHomepage />} />
+        <Route path="*" element={<NotFound/>} />
 
         {/* <Route
           path="/auth"

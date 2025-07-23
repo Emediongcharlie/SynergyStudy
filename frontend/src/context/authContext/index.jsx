@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { initialLoginFormData, initialRegisterFormData } from "@/config";
 import { checkAuthService, loginService, registerService } from "@/services";
 import { createContext, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export default function AuthProvider({ children }) {
     authenticate: false,
     user: null,
   });
+  const [loading, setLoading] = useState(true);
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -44,18 +46,31 @@ export default function AuthProvider({ children }) {
   //to check if user is authenticated
   useEffect(() => {
     async function checkAuth() {
-      const data = await checkAuthService();
+      try {
+        const data = await checkAuthService();
 
-      if (data.success) {
-        setAuth({
-          authenticate: true,
-          user: data.user,
-        });
-      } else {
-        setAuth({
-          authenticate: false,
-          user: null,
-        });
+        if (data.success) {
+          setAuth({
+            authenticate: true,
+            user: data.user,
+          });
+          setLoading(false);
+        } else {
+          setAuth({
+            authenticate: false,
+            user: null,
+          });
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("Error checking authentication:", error);
+        if (error?.response?.data?.success === "false") {
+          setAuth({
+            authenticate: false,
+            user: null,
+          });
+          setLoading(false);
+        }
       }
     }
     checkAuth();
@@ -75,7 +90,10 @@ export default function AuthProvider({ children }) {
         auth,
       }}
     >
-      {children}
+      {
+        // loading ? <Skeleton /> :
+        children
+      }
     </AuthContext.Provider>
   );
 }
