@@ -72,6 +72,7 @@ export default function AuthProvider({ children }) {
         setRegisterFormData,
         handleRegister,
         handleLogin,
+        auth,
       }}
     >
       {children}
