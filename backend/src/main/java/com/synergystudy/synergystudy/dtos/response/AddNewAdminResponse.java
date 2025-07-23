@@ -10,5 +10,6 @@ public class AddNewAdminResponse {
     private String lastName;
     private String email;
     private String message;
+    private String password;
 
 }

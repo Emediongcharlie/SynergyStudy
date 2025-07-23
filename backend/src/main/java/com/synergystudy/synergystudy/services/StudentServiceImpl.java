@@ -1,13 +1,13 @@
 package com.synergystudy.synergystudy.services;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.synergystudy.synergystudy.data.models.Course;
-import com.synergystudy.synergystudy.data.models.Instructor;
+
 import com.synergystudy.synergystudy.data.models.Student;
 import com.synergystudy.synergystudy.data.repositories.CourseRepo;
 import com.synergystudy.synergystudy.data.repositories.StudentRepo;
@@ -38,6 +38,8 @@ public class StudentServiceImpl implements StudentService {
     MailService mailService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     Student student = new Student();
 
@@ -48,8 +50,10 @@ public class StudentServiceImpl implements StudentService {
         student.setLastName(addNewStudentRequest.getLastName());
         student.setEmail(addNewStudentRequest.getEmail());
         student.setPhoneNumber(addNewStudentRequest.getPhoneNumber());
-        student.setPassword(addNewStudentRequest.getPassword());
+        student.setPassword(passwordEncoder.encode(addNewStudentRequest.getPassword()));
         studentRepo.save(student);
+
+        mailService.sendRegistrationEmail(addNewStudentRequest.getEmail());
 
         AddNewStudentResponse response = new AddNewStudentResponse();
         response.setId(student.getId());
@@ -64,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
      }
 
     @Override
-    public LoginStudentResponse loginInstructor(LoginStudentRequest loginStudentRequest){
+    public LoginStudentResponse loginStudent(LoginStudentRequest loginStudentRequest){
 
         findByEmail(loginStudentRequest.getEmail());
 
@@ -101,7 +105,7 @@ public RegisterCourseResponse registerCourse(RegisterCourseRequest registerCours
     student.getCourses().add(course);
     studentRepo.save(student);
 
-    mailService.sendRegistrationEmail(student.getEmail(), course.getTitle());
+    mailService.sendCourseRegistrationEmail(student.getEmail(), course.getTitle());
 
     RegisterCourseResponse response = new RegisterCourseResponse();
     response.setId(course.getId());

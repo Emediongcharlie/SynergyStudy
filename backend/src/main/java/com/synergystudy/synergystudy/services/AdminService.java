@@ -12,5 +12,6 @@ public interface AdminService {
 
     AddNewAdminResponse registerAdmin(AddNewAdminRequest addNewAdminRequest);
     LoginAdminResponse loginAdmin(LoginAdminRequest loginAdminRequest);
+    
 
 }

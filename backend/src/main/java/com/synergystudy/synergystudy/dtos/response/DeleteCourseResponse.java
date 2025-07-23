@@ -8,6 +8,7 @@ import lombok.Data;
 public class DeleteCourseResponse {
 
     private Course course;
+    private Long id;
     private String message;
 
 }
