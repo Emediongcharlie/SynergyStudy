@@ -21,11 +21,13 @@ export default function AuthPage() {
     setLoginFormData,
     registerFormData,
     setRegisterFormData,
+    handleRegister,
+    handleLogin,
   } = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-16 flex items-center justify-between">
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <header className="px-4 lg:px-8 py-4 shadow bg-white flex items-center justify-between">
         {/* Left side: Logo */}
         <Link to="/" className="flex items-center">
           <GraduationCap className="h-8 w-8 mr-2" />
@@ -33,7 +35,7 @@ export default function AuthPage() {
         </Link>
 
         {/* Right side: Login/Register toggle */}
-        <div className="text-sm">
+        <div className="text-sm text-700">
           {activeTab === "login" ? (
             <span>
               Don't have an account?{" "}
@@ -75,7 +77,7 @@ export default function AuthPage() {
               >
                 <CardTitle className={"text-2xl"}>Login</CardTitle>
                 <CardDescription>
-                  Enter your Username and password
+                  Enter your Email and password
                 </CardDescription>
               </CardHeader>
               <CardContent className={"space-y-2"}>
@@ -87,14 +89,17 @@ export default function AuthPage() {
                   isButtonDisabled={
                     !loginFormData.email || !loginFormData.password
                   }
+                  handleSubmit={handleLogin}
                 />
               </CardContent>
             </Card>
           </TabsContent>
           <TabsContent value="register">
             <Card className={"p-5 space-y-4"}>
-              <CardHeader className={"flex flex-col justify-center items-center"}>
-                <CardTitle  className={"text-2xl"}>Create an account</CardTitle>
+              <CardHeader
+                className={"flex flex-col justify-center items-center"}
+              >
+                <CardTitle className={"text-2xl"}>Create an account</CardTitle>
                 <CardDescription>
                   Enter your details to create a new account
                 </CardDescription>
@@ -110,6 +115,7 @@ export default function AuthPage() {
                     !registerFormData.password ||
                     !registerFormData.email
                   }
+                  handleSubmit={handleRegister}
                 />
               </CardContent>
             </Card>
