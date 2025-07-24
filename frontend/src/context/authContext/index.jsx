@@ -78,6 +78,13 @@ export default function AuthProvider({ children }) {
 
   console.log("Auth Context:", auth);
 
+  function logout() {
+    setAuth({
+      authenticate: false,
+      user: null,
+    });
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -88,6 +95,7 @@ export default function AuthProvider({ children }) {
         handleRegister,
         handleLogin,
         auth,
+        logout,
       }}
     >
       {
