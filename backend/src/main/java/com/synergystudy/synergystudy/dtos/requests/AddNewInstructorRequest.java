@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.synergystudy.synergystudy.data.models.Course;
 
-import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 @Data

@@ -85,7 +85,7 @@ public class AdminServiceImpl implements AdminService {
     return response;
     }
 
-    public RemoveInstructorResponse findInstructor(RemoveInstructorRequest request){
+    public RemoveInstructorResponse removeInstructor(RemoveInstructorRequest request){
         Instructor instructor = instructorRepo.findById(request.getId())
         .orElseThrow(() -> new RuntimeException("Instructor not found"));
 
@@ -128,9 +128,9 @@ public class AdminServiceImpl implements AdminService {
         return response; 
     }
 
-    public DeleteCourseResponse findInstructor(DeleteCourseRequest request){
+    public DeleteCourseResponse deleteCourse(DeleteCourseRequest request){
         Course course = courseRepo.findById(request.getId())
-        .orElseThrow(() -> new RuntimeException("Instructor not found"));
+        .orElseThrow(() -> new RuntimeException("Course not found"));
 
         courseRepo.delete(course);
 
