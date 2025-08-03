@@ -76,9 +76,7 @@ export default function AuthPage() {
                 className={"flex flex-col justify-center items-center"}
               >
                 <CardTitle className={"text-2xl"}>Login</CardTitle>
-                <CardDescription>
-                  Enter your Email and password
-                </CardDescription>
+                <CardDescription>Enter your Email and password</CardDescription>
               </CardHeader>
               <CardContent className={"space-y-2"}>
                 <CommonForm

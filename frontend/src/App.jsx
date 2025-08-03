@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 import StudentViewLayout from "./components/student-view/CommonLayout";
 import NotFound from "./pages/not-found";
+import CreateCourse from "./pages/admin/CreateCourse";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -20,7 +21,8 @@ function App() {
         <Route path="/student" element={<StudentHomepage />} />
         <Route path="/" element={<StudentViewLayout />} />
         <Route path="/home" element={<StudentHomepage />} />
-        <Route path="*" element={<NotFound/>} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/admin/create-course" element={<CreateCourse />} />
 
         {/* <Route
           path="/auth"
@@ -38,6 +40,17 @@ function App() {
           element={
             <ProtectedRoute
               element={<AdminDashboard />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+
+        <Route
+          path="/admin/create-course"
+          element={
+            <ProtectedRoute
+              element={<CreateCourse />}
               authenticated={auth?.authenticate}
               user={auth?.user}
             />
