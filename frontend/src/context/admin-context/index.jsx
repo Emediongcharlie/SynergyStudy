@@ -1,6 +1,10 @@
-import { courseLandingInitialFormData } from "@/config";
+import {
+  courseCurriculumInitialFormData,
+  courseLandingInitialFormData,
+} from "@/config";
 import { createContext, useState } from "react";
 
+// eslint-disable-next-line
 export const AdminContext = createContext(null);
 
 export default function AdminProvider({ children }) {
@@ -8,9 +12,18 @@ export default function AdminProvider({ children }) {
     courseLandingInitialFormData
   );
 
+  const [courseCurriculumFormData, setCourseCurriculumFormData] = useState(
+    courseCurriculumInitialFormData
+  );
+
   return (
     <AdminContext.Provider
-      value={{ courseLandingFormData, setCourseLandingFormData }}
+      value={{
+        courseLandingFormData,
+        setCourseLandingFormData,
+        courseCurriculumFormData,
+        setCourseCurriculumFormData,
+      }}
     >
       {children}
     </AdminContext.Provider>
