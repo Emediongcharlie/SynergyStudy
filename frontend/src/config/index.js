@@ -136,7 +136,7 @@ export const courseCategories = [
   },
 ];
 
-export const courseCreateLandingPageFormControls = [
+export const courseLandingPageFormControls = [
   {
     name: "title",
     label: "Title",
@@ -150,7 +150,7 @@ export const courseCreateLandingPageFormControls = [
     componentType: "select",
     type: "text",
     placeholder: "",
-    options: "courseCategories",
+    options: courseCategories,
   },
   {
     name: "level",
@@ -158,7 +158,7 @@ export const courseCreateLandingPageFormControls = [
     componentType: "select",
     type: "text",
     placeholder: "",
-    options: "courseLevelOptions",
+    options: courseLevelOptions,
   },
   {
     name: "primaryLanguage",
@@ -166,7 +166,7 @@ export const courseCreateLandingPageFormControls = [
     componentType: "select",
     type: "text",
     placeholder: "",
-    options: "languageOptions",
+    options: languageOptions,
   },
   {
     name: "subtitle",
