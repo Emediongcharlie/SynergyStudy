@@ -20,3 +20,9 @@ export async function checkAuthService() {
 
   return data.data;
 }
+
+export async function mediaUploadService(formData) {
+  const data = await axiosInstance.post("/media/upload", formData); // depends on the backend implementation
+
+  return data.data;
+}

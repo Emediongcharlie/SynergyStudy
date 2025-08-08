@@ -221,6 +221,6 @@ export const courseCurriculumInitialFormData = [
     title: "",
     videoUrl: "",
     freePreview: false,
-    public_id: "", //to be provided by cloudinary
+    public_id: "", //to be provided by cloudinary or mux (depends on what the backend uses)
   },
 ];
