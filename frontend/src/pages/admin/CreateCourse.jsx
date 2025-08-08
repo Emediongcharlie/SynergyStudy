@@ -40,7 +40,7 @@ export default function CreateCourse() {
                 value="settings"
                 className="data-[state=active]:bg-white data-[state=active]:text-primary hover:bg-white/70 py-2 text-sm font-medium transition"
               >
-                Settings
+                Thumbnail
               </TabsTrigger>
             </TabsList>
 
