@@ -1,3 +1,4 @@
+import MediaProgressBar from "@/components/media-progress-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,8 +7,14 @@ import { mediaUploadService } from "@/services";
 import React, { useContext } from "react";
 
 export default function CourseSettings() {
-  const { courseLandingFormData, setCourseLandingFormData } =
-    useContext(AdminContext);
+  const {
+    courseLandingFormData,
+    setCourseLandingFormData,
+    mediaUploadProgress,
+    setMediaUploadProgress,
+    mediaUploadProgressPercentage,
+    setMediaUploadProgressPercentage,
+  } = useContext(AdminContext);
 
   async function handleImageUploadChange(e) {
     const selectedImage = e.target.files[0];
@@ -17,7 +24,12 @@ export default function CourseSettings() {
       imageFormData.append("file", selectedImage);
 
       try {
-        const response = await mediaUploadService(imageFormData);
+        setMediaUploadProgress(true);
+
+        const response = await mediaUploadService(
+          imageFormData,
+          setMediaUploadProgress
+        );
 
         console.log(response, "response"); //to check the response data sent from the backend
         if (response.success) {
@@ -25,6 +37,7 @@ export default function CourseSettings() {
             ...courseLandingFormData,
             image: response.data.url, //this .data.url depends on the format the backend used to send the image
           });
+          setMediaUploadProgress(false);
         }
       } catch (error) {
         console.log(error);
@@ -37,6 +50,14 @@ export default function CourseSettings() {
       <CardHeader>
         <CardTitle>Course Thumbnail</CardTitle>
       </CardHeader>
+      <div className="px-4" >
+        {mediaUploadProgress ? (
+        <MediaProgressBar
+          isMediaUploading={mediaUploadProgress}
+          progress={mediaUploadProgressPercentage}
+        />
+      ) : null}
+      </div>
       <CardContent>
         {courseLandingFormData?.image ? (
           <img src={courseLandingFormData.image} alt="" />
@@ -47,6 +68,7 @@ export default function CourseSettings() {
               onChange={handleImageUploadChange}
               type={"file"}
               accept="image/*"
+              className={'cursor-pointer'}
             ></Input>
           </div>
         )}

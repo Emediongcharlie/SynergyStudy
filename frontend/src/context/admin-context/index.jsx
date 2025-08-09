@@ -18,6 +18,9 @@ export default function AdminProvider({ children }) {
 
   const [mediaUploadProgress, setMediaUploadProgress] = useState(false);
 
+  const [mediaUploadProgressPercentage, setMediaUploadProgressPercentage] =
+    useState(0);
+
   return (
     <AdminContext.Provider
       value={{
@@ -27,6 +30,8 @@ export default function AdminProvider({ children }) {
         setCourseCurriculumFormData,
         mediaUploadProgress,
         setMediaUploadProgress,
+        mediaUploadProgressPercentage,
+        setMediaUploadProgressPercentage,
       }}
     >
       {children}

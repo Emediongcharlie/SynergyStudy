@@ -1,3 +1,4 @@
+import MediaProgressBar from "@/components/media-progress-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,8 @@ export default function CourseCurriculum() {
     setCourseCurriculumFormData,
     mediaUploadProgress,
     setMediaUploadProgress,
+    mediaUploadProgressPercentage,
+    setMediaUploadProgressPercentage,
   } = useContext(AdminContext);
 
   function handleNewLecture() {
@@ -56,7 +59,10 @@ export default function CourseCurriculum() {
 
       try {
         setMediaUploadProgress(true);
-        const response = await mediaUploadService(videoFormData);
+        const response = await mediaUploadService(
+          videoFormData,
+          setMediaUploadProgressPercentage
+        );
         console.log(response, "response");
 
         if (response.success) {
@@ -64,10 +70,10 @@ export default function CourseCurriculum() {
           cpyCourseCurriculumFormData[currentIndex] = {
             ...cpyCourseCurriculumFormData[currentIndex],
             videoUrl: response?.data?.url, //this depends on how the response is sent from the backend
-            public_id: response?.data?.public_id //this depends on how the response is sent from the backend
-          }
+            public_id: response?.data?.public_id, //this depends on how the response is sent from the backend
+          };
           setCourseCurriculumFormData(cpyCourseCurriculumFormData);
-          setMediaUploadProgress(false)
+          setMediaUploadProgress(false);
         }
       } catch (error) {
         console.log(error);
@@ -82,6 +88,12 @@ export default function CourseCurriculum() {
       </CardHeader>
       <CardContent>
         <Button onClick={handleNewLecture}>Add Lecture</Button>
+        {mediaUploadProgress ? (
+          <MediaProgressBar
+            isMediaUploading={mediaUploadProgress}
+            progress={mediaUploadProgressPercentage}
+          />
+        ) : null}
         <div className="space-y-6">
           {courseCurriculumFormData.map((curriculumItem, index) => (
             <div
@@ -122,7 +134,7 @@ export default function CourseCurriculum() {
                   type={"file"}
                   accept="video/*"
                   onChange={(e) => handleSingleLectureUpload(e, index)}
-                  className={"mb-4 mt-6"}
+                  className={"mb-4 mt-6 cursor-pointer"}
                 />
               </div>
             </div>
