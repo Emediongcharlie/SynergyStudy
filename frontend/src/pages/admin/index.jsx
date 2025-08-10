@@ -8,7 +8,6 @@ import {
   Settings,
   User,
   Users,
-  PlusCircle,
 } from "lucide-react";
 import React, { useContext, useState } from "react";
 import AdminDashboard from "@/components/admin-view/dashboard";
