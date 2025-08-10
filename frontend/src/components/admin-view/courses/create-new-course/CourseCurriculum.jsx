@@ -60,7 +60,7 @@ export default function CourseCurriculum() {
 
       try {
         setMediaUploadProgress(true);
-        const response = await mediaUploadService(
+        const response = await mediaUploadService( // no backend API yet. This could change
           videoFormData,
           setMediaUploadProgressPercentage
         );
@@ -149,7 +149,7 @@ export default function CourseCurriculum() {
                       width="450px"
                       height="200px"
                     />
-                    <Button>Replace Video</Button>
+                    <Button>Delete Video</Button>
                     <Button className={"bg-red-900"}>Delete Lecture</Button>
                   </div>
                 ) : (
