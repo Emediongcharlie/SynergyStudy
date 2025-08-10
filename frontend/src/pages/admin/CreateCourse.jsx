@@ -3,10 +3,46 @@ import CourseLanding from "@/components/admin-view/courses/create-new-course/Cou
 import CourseSettings from "@/components/admin-view/courses/create-new-course/CourseSettings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { AdminContext } from "@/context/admin-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import React from "react";
+import React, { useContext } from "react";
 
 export default function CreateCourse() {
+  const { courseLandingFormData, courseCurriculumFormData } =
+    useContext(AdminContext);
+
+  function isEmpty(value) {
+    if (Array.isArray(value)) {
+      return value.length === 0;
+    }
+
+    return value === "" || value === null || value === undefined;
+  }
+
+  function validateFormData() {
+    for (const key in courseLandingFormData) {
+      if (isEmpty(courseLandingFormData[key])) {
+        return false;
+      }
+    }
+    let hasFreePreview = false;
+
+    for (const item of courseCurriculumFormData) {
+      if (
+        isEmpty(item.title) ||
+        isEmpty(item.videoUrl) ||
+        isEmpty(item.public_id)
+      ) {
+        return false;
+      }
+
+      if (item.freePreview) {
+        hasFreePreview = true; //has at least one free preview
+      }
+    }
+    return hasFreePreview;
+  }
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header with title and submit button */}
@@ -14,7 +50,10 @@ export default function CreateCourse() {
         <h1 className="text-3xl font-semibold tracking-tight">
           Create a New Course
         </h1>
-        <Button className="text-sm tracking-wide font-semibold px-6 py-2">
+        <Button
+          disabled={!validateFormData()}
+          className="text-sm tracking-wide font-semibold px-6 py-2"
+        >
           Submit
         </Button>
       </div>
