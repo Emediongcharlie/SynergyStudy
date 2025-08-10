@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
-import ReactPlayer from 'react-player'
+import React from "react";
+import ReactPlayer from "react-player";
 
-export default function VideoPlayer({width = '100%', height= '100%', url}) {
-
-  
-
+export default function VideoPlayer({ url }) {
   return (
     <div>
-      <ReactPlayer width={'100%'} height={'100%'} url={url} ></ReactPlayer>
+      <ReactPlayer
+        className="absolute top-0 left-0"
+        width={"100%"}
+        height={"100%"}
+        url={url}
+        controls
+      ></ReactPlayer>
     </div>
-  )
+  );
 }
