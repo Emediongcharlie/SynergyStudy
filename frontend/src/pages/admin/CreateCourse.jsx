@@ -3,13 +3,28 @@ import CourseLanding from "@/components/admin-view/courses/create-new-course/Cou
 import CourseSettings from "@/components/admin-view/courses/create-new-course/CourseSettings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  courseCurriculumInitialFormData,
+  courseLandingInitialFormData,
+} from "@/config";
 import { AdminContext } from "@/context/admin-context";
+import { AuthContext } from "@/context/authContext";
+import { addNewCourseService } from "@/services";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCourse() {
-  const { courseLandingFormData, courseCurriculumFormData } =
-    useContext(AdminContext);
+  const {
+    courseLandingFormData,
+    courseCurriculumFormData,
+    setCourseLandingFormData,
+    setCourseCurriculumFormData,
+  } = useContext(AdminContext);
+
+  const { auth } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   function isEmpty(value) {
     if (Array.isArray(value)) {
@@ -43,9 +58,32 @@ export default function CreateCourse() {
     return hasFreePreview;
   }
 
+  async function handleCreateCourse() {
+    const courseFinalFormData = {
+      //these details in this form data depends if the backend is receiving all of them or not
+      adminId: auth?.user?.id, //these depends on how it is sent from the backend
+      adminName: auth?.user?.name,
+      date: new Date(),
+      ...courseLandingFormData,
+      objectives: String,
+      students: [],
+      curriculum: courseCurriculumFormData,
+      isPublished: true,
+    };
+
+    const response = await addNewCourseService(courseFinalFormData);
+
+    if (response.success) {
+      setCourseLandingFormData(courseLandingInitialFormData);
+      setCourseCurriculumFormData(courseCurriculumInitialFormData);
+      navigate(-1);
+    }
+
+    console.log(courseFinalFormData, "courseFinalFormData");
+  }
+
   return (
     <div className="container mx-auto p-6 space-y-6">
-      {/* Header with title and submit button */}
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold tracking-tight">
           Create a New Course
@@ -53,12 +91,12 @@ export default function CreateCourse() {
         <Button
           disabled={!validateFormData()}
           className="text-sm tracking-wide font-semibold px-6 py-2"
+          onClick={handleCreateCourse}
         >
           Submit
         </Button>
       </div>
 
-      {/* Card with tabs */}
       <Card className="rounded-2xl shadow-md border border-gray-200">
         <CardContent className="p-6">
           <Tabs defaultValue="curriculum" className="w-full">
