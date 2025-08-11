@@ -12,7 +12,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AdminCourses() {
+export default function AdminCourses({ listOfCourses }) {
   const navigate = useNavigate();
 
   return (
@@ -40,27 +40,35 @@ export default function AdminCourses() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">React</TableCell>
-                <TableCell>100</TableCell>
-                <TableCell>#20,000</TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size={"sm"}
-                    className={"hover:bg-gray-500 cursor-pointer"}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    className="ml-2 hover:bg-red-900 cursor-pointer"
-                    size={"sm"}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
+              {listOfCourses && listOfCourses.length > 0
+                ? listOfCourses.map((course) => (
+                    <TableRow>
+                      {" "}
+                      {/* the .title, .students, ..... depends on how it is been passed from the backend */}
+                      <TableCell className="font-medium">
+                        {course?.title}
+                      </TableCell>
+                      <TableCell>{course?.students?.length}</TableCell>
+                      <TableCell>{course?.price}</TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          variant="ghost"
+                          size={"sm"}
+                          className={"hover:bg-gray-500 cursor-pointer"}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          className="ml-2 hover:bg-red-900 cursor-pointer"
+                          size={"sm"}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : "You have no courses, add a course"}
             </TableBody>
           </Table>
         </div>

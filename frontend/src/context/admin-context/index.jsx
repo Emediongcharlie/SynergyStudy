@@ -21,6 +21,8 @@ export default function AdminProvider({ children }) {
   const [mediaUploadProgressPercentage, setMediaUploadProgressPercentage] =
     useState(0);
 
+  const [adminCoursesList, setAdminCoursesList] = useState([]);
+
   return (
     <AdminContext.Provider
       value={{
@@ -32,6 +34,8 @@ export default function AdminProvider({ children }) {
         setMediaUploadProgress,
         mediaUploadProgressPercentage,
         setMediaUploadProgressPercentage,
+        adminCoursesList,
+        setAdminCoursesList,
       }}
     >
       {children}

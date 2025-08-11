@@ -9,16 +9,30 @@ import {
   User,
   Users,
 } from "lucide-react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AdminDashboard from "@/components/admin-view/dashboard";
 import AdminCourses from "@/components/admin-view/courses";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/authContext";
+import { AdminContext } from "@/context/admin-context";
+import { fetchAdminCourseListService } from "@/services";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { logout } = useContext(AuthContext);
+  const { adminCoursesList, setAdminCoursesList } = useContext(AdminContext);
+
+  async function fetchAllCourses() {
+    const response = await fetchAdminCourseListService();
+
+    console.log(response);
+    if (response?.success) setAdminCoursesList(response?.data);
+  }
+
+  useEffect(() => {
+    fetchAllCourses();
+  }, []);
 
   const menuItems = [
     {
@@ -31,7 +45,7 @@ export default function AdminDashboardPage() {
       icon: Book,
       label: "Courses",
       value: "courses",
-      component: <AdminCourses />,
+      component: <AdminCourses listOfCourses={adminCoursesList} />,
     },
     {
       icon: MessageCircle,
@@ -72,7 +86,6 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Sidebar */}
       <aside className="w-64 bg-white text-black shadow-lg hidden md:flex flex-col">
         <div className="p-6 border-b border-gray-700">
           <h2 className="text-lg font-bold">SynergyStudy</h2>
@@ -116,9 +129,7 @@ export default function AdminDashboardPage() {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto bg-white">
-        {/* Stats Cards */}
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto bg-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-[#0B1120] text-white rounded-lg p-6 text-center">
             <h3 className="text-lg">Total Active Courses</h3>
@@ -134,7 +145,6 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Tab content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           {menuItems.map((item) => (
             <TabsContent value={item.value} key={item.value}>
