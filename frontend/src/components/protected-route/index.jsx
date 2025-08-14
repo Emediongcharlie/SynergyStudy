@@ -9,6 +9,23 @@ export default function ProtectedRoute({ authenticated, user, element }) {
 
   if (
     authenticated &&
+    user?.role !== "instructor" &&
+    (location.pathname.includes("/instructor") ||
+      location.pathname.includes("/auth"))
+  ) {
+    return <Navigate to={"/home"} />;
+  }
+
+  if (
+    authenticated &&
+    user.role === "instructor" &&
+    !location.pathname.includes("/instructor")
+  ) {
+    return <Navigate to={"/instructor"} />;
+  }
+
+  if (
+    authenticated &&
     user?.role !== "admin" &&
     (location.pathname.includes("/admin") ||
       location.pathname.includes("/auth"))

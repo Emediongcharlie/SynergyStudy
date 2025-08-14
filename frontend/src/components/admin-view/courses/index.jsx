@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminCourses({ listOfCourses }) {
   const navigate = useNavigate();
+
+  
 
   return (
     <Card>
@@ -52,6 +53,10 @@ export default function AdminCourses({ listOfCourses }) {
                       <TableCell>{course?.price}</TableCell>
                       <TableCell className="text-right">
                         <Button
+                          onClick={() => {
+                            setCurrentEditedCourseId(course?._id); //_id from database
+                            navigate(`/admin/edit-course/${course?._id}`);
+                          }}
                           variant="ghost"
                           size={"sm"}
                           className={"hover:bg-gray-500 cursor-pointer"}

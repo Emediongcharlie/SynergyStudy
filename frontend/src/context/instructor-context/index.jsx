@@ -5,9 +5,9 @@ import {
 import { createContext, useState } from "react";
 
 // eslint-disable-next-line
-export const AdminContext = createContext(null);
+export const InstructorContext = createContext(null);
 
-export default function AdminProvider({ children }) {
+export default function InstructorProvider({ children }) {
   const [courseLandingFormData, setCourseLandingFormData] = useState(
     courseLandingInitialFormData
   );
@@ -21,11 +21,11 @@ export default function AdminProvider({ children }) {
   const [mediaUploadProgressPercentage, setMediaUploadProgressPercentage] =
     useState(0);
 
-  const [adminCoursesList, setAdminCoursesList] = useState([]);
+  const [instructorCoursesList, setInstructorCoursesList] = useState([]);
   const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
 
   return (
-    <AdminContext.Provider
+    <InstructorContext.Provider
       value={{
         courseLandingFormData,
         setCourseLandingFormData,
@@ -35,13 +35,13 @@ export default function AdminProvider({ children }) {
         setMediaUploadProgress,
         mediaUploadProgressPercentage,
         setMediaUploadProgressPercentage,
-        adminCoursesList,
-        setAdminCoursesList,
+        instructorCoursesList,
+        setInstructorCoursesList,
         currentEditedCourseId,
         setCurrentEditedCourseId,
       }}
     >
       {children}
-    </AdminContext.Provider>
+    </InstructorContext.Provider>
   );
 }

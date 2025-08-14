@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthPage from "./pages/auth";
-import AdminDashboard from "./pages/admin";
 import StudentHomepage from "./pages/student/home";
 import ProtectedRoute from "./components/protected-route";
 import { useContext } from "react";
@@ -9,6 +8,11 @@ import { AuthContext } from "./context/authContext";
 import StudentViewLayout from "./components/student-view/CommonLayout";
 import NotFound from "./pages/not-found";
 import CreateCourse from "./pages/admin/CreateCourse";
+import InstructorDashboard from "./components/instructor-view/dashboard";
+import AdminDashboard from "./components/admin-view/dashboard";
+import AdminDashboardPage from "./pages/admin";
+import InstructorDashboardPage from "./pages/instructor";
+import InstructorCreateCourse from "./pages/instructor/InstructorCreateCourse";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -17,12 +21,17 @@ function App() {
     <>
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/create-course" element={<CreateCourse />} />
+        <Route path="/instructor" element={<InstructorDashboardPage />} />
+        <Route
+          path="/instructor/create-course"
+          element={<InstructorCreateCourse />}
+        />
         <Route path="/student" element={<StudentHomepage />} />
         <Route path="/" element={<StudentViewLayout />} />
         <Route path="/home" element={<StudentHomepage />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/admin/create-course" element={<CreateCourse />} />
 
         {/* <Route
           path="/auth"
@@ -39,7 +48,7 @@ function App() {
           path="/admin"
           element={
             <ProtectedRoute
-              element={<AdminDashboard />}
+              element={<AdminDashboardPage />}
               authenticated={auth?.authenticate}
               user={auth?.user}
             />
@@ -56,6 +65,29 @@ function App() {
             />
           }
         />
+
+        <Route
+          path="/instructor"
+          element={
+            <ProtectedRoute
+              element={<InstructorDashboardPage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+
+        <Route
+          path="/instructor/create-course"
+          element={
+            <ProtectedRoute
+              element={<InstructorCreateCourse />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+
         <Route
           path="/"
           element={
@@ -66,9 +98,11 @@ function App() {
             />
           }
         >
-          <Route path="/" element={<StudentHomepage/>} />
-          <Route path="/home" element={<StudentHomepage/>} />
-        </Route> */}
+          <Route path="/" element={<StudentHomepage />} />
+          <Route path="/home" element={<StudentHomepage />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </>
   );
