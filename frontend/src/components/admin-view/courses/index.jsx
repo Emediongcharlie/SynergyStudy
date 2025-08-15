@@ -14,8 +14,6 @@ import { useNavigate } from "react-router-dom";
 export default function AdminCourses({ listOfCourses }) {
   const navigate = useNavigate();
 
-  
-
   return (
     <Card>
       <CardHeader className="flex items-center justify-between">
@@ -44,7 +42,6 @@ export default function AdminCourses({ listOfCourses }) {
               {listOfCourses && listOfCourses.length > 0
                 ? listOfCourses.map((course) => (
                     <TableRow>
-                      {" "}
                       {/* the .title, .students, ..... depends on how it is been passed from the backend */}
                       <TableCell className="font-medium">
                         {course?.title}
@@ -54,7 +51,6 @@ export default function AdminCourses({ listOfCourses }) {
                       <TableCell className="text-right">
                         <Button
                           onClick={() => {
-                            setCurrentEditedCourseId(course?._id); //_id from database
                             navigate(`/admin/edit-course/${course?._id}`);
                           }}
                           variant="ghost"

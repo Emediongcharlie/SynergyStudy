@@ -23,6 +23,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/admin/create-course" element={<CreateCourse />} />
+        <Route path="/admin/edit-course/:courseId" element={<CreateCourse />} />
         <Route path="/instructor" element={<InstructorDashboardPage />} />
         <Route
           path="/instructor/create-course"
@@ -57,6 +58,16 @@ function App() {
 
         <Route
           path="/admin/create-course"
+          element={
+            <ProtectedRoute
+              element={<CreateCourse />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/admin/edit-course/:courseId"
           element={
             <ProtectedRoute
               element={<CreateCourse />}
