@@ -8,11 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React from "react";
+import { AdminContext } from "@/context/admin-context";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminCourses({ listOfCourses }) {
   const navigate = useNavigate();
+  const { currentEditedCourseId, setCurrentEditedCourseId } =
+    useContext(AdminContext);
 
   return (
     <Card>
@@ -23,6 +26,10 @@ export default function AdminCourses({ listOfCourses }) {
           onClick={() => {
             navigate("/admin/create-course");
           }}
+          // to check whether current edited course id is null or not:
+          // onClick={() => { setCurrentEditedCourseId(null);
+          // navigate("/admin/create-course")
+          // }}
         >
           Create new course
         </Button>

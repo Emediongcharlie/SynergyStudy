@@ -105,7 +105,7 @@ export default function CreateCourse() {
       }, {});
       console.log(setCourseFormData, response?.data, "setCourseFormData");
       setCourseLandingFormData(setCourseFormData);
-      setCourseCurriculumFormData(response?.data?.curriculum) // .data.curriculum depends on the data
+      setCourseCurriculumFormData(response?.data?.curriculum); // .data.curriculum depends on the data in the response from the backend
     }
   }
 
@@ -114,8 +114,8 @@ export default function CreateCourse() {
   }, [currentEditedCourseId]);
 
   useEffect(() => {
-    if (params) setCurrentEditedCourseId(params?.courseId);
-  }, [params]);
+    if (params?.courseId) setCurrentEditedCourseId(params?.courseId);
+  }, [params?.courseId]);
 
   return (
     <div className="container mx-auto p-6 space-y-6">
