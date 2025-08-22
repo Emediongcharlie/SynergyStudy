@@ -12,6 +12,7 @@ import { AuthContext } from "@/context/authContext";
 import {
   addNewCourseService,
   fetchAdminCourseDetailsService,
+  updateCourseByIdService,
 } from "@/services";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import React, { useContext, useEffect } from "react";
@@ -79,12 +80,19 @@ export default function CreateCourse() {
       isPublished: true,
     };
 
-    const response = await addNewCourseService(courseFinalFormData);
+    const response =
+      currentEditedCourseId !== null
+        ? await updateCourseByIdService(
+            currentEditedCourseId,
+            courseFinalFormData
+          )
+        : await addNewCourseService(courseFinalFormData);
 
-    if (response.success) {
+    if (response?.success) {
       setCourseLandingFormData(courseLandingInitialFormData);
       setCourseCurriculumFormData(courseCurriculumInitialFormData);
       navigate(-1);
+      setCurrentEditedCourseId(null);
     }
 
     console.log(courseFinalFormData, "courseFinalFormData");
